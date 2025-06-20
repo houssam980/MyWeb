@@ -1,4 +1,4 @@
-// Initialize AOS (Animate On Scroll)
+// Setting up smooth scroll animations for the site
 document.addEventListener('DOMContentLoaded', function() {
     AOS.init({
         duration: 800,
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Mobile Navigation Toggle
+// Hamburger menu functionality for mobile users
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -17,13 +17,13 @@ hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
 
-// Close mobile menu when clicking on a link
+// Auto-close mobile menu when user clicks a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
 }));
 
-// Smooth scrolling for navigation links
+// Smooth page scrolling when clicking nav links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -37,10 +37,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Enhanced scroll functionality for navbar and scroll-to-top button
-// (This is handled in the scroll-to-top section below)
+// Combined navbar and scroll-to-top logic
+// (Moved this to the scroll section for better organization)
 
-// Typing animation for hero title
+// Cool typewriter effect for my name
 function typeWriter(element, text, speed = 50) {
     let i = 0;
     element.innerHTML = '';
@@ -55,21 +55,21 @@ function typeWriter(element, text, speed = 50) {
     type();
 }
 
-// Initialize typing animation when page loads
+// Start the typing animation when page loads
 window.addEventListener('load', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        // Store the original HTML structure
+        // Save the original content first
         const originalHTML = `
             <span class="hero-name">Houssam Ghmari</span><br>
             <span class="gradient-text">Software Engineer</span><br>
             <span class="hero-subtitle">UI/UX Designer & IT Specialist</span>
         `;
         
-        // Clear the title initially
+        // Empty the title to start fresh
         heroTitle.style.opacity = '0';
         
-        // Animate in with fade effect
+        // Fade in the completed title
         setTimeout(() => {
             heroTitle.innerHTML = originalHTML;
             heroTitle.style.opacity = '1';
@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
     }
 });
 
-// Parallax effect for floating cards
+// Making the tech icons float and move subtly
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const rate = scrolled * -0.5;
@@ -89,20 +89,20 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Enhanced CV hint interactions
+// Interactive CV hints I added to skill cards
 document.addEventListener('DOMContentLoaded', function() {
-    // Add click handlers for CV hints
+    // Making CV hints clickable and interactive
     document.querySelectorAll('.cv-hint').forEach(hint => {
         hint.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Add a pulse animation
+            // Quick visual feedback when clicked
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = '';
             }, 150);
             
-            // Smooth scroll to CV section
+            // Navigate smoothly to CV download section
             const cvSection = document.querySelector('#cv');
             if (cvSection) {
                 cvSection.scrollIntoView({
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     block: 'start'
                 });
                 
-                // Add highlight effect to CV section
+                // Highlight the CV section briefly
                 setTimeout(() => {
                     cvSection.classList.add('highlight-section');
                     setTimeout(() => {
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Add hover sound effect (visual feedback)
+        // Subtle hover feedback for better UX
         hint.addEventListener('mouseenter', function() {
             this.style.filter = 'brightness(1.05)';
         });
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Staggered animation for skill categories
+    // Smooth entrance animation for skill categories
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -151,33 +151,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Contact form handling
+// Contact form logic (currently not used)
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Get form data
+        // Collect form information
         const formData = new FormData(this);
         const name = formData.get('name');
         const email = formData.get('email');
         const subject = formData.get('subject');
         const message = formData.get('message');
         
-        // Simple validation
+        // Basic field validation
         if (!name || !email || !subject || !message) {
             showNotification('Please fill in all fields', 'error');
             return;
         }
         
-        // Email validation
+        // Check if email format is valid
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             showNotification('Please enter a valid email address', 'error');
             return;
         }
         
-        // Simulate form submission
+        // Mock form submission for demo
         const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         
@@ -201,7 +201,7 @@ function removeNotification(notification) {
     }, 300);
 }
 
-// Stats counter animation
+// Animated counters for my statistics
 function animateStats() {
     const stats = document.querySelectorAll('.stat-number');
     
@@ -221,7 +221,7 @@ function animateStats() {
     });
 }
 
-// Intersection Observer for stats animation
+// Trigger stats animation when section comes into view
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -236,7 +236,7 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
-// Dynamic background particles
+// Background particle animation system I built
 class ParticleSystem {
     constructor() {
         this.particles = [];
@@ -302,12 +302,12 @@ class ParticleSystem {
     }
 }
 
-// Initialize particle system
+// Start up the particle system
 document.addEventListener('DOMContentLoaded', () => {
     new ParticleSystem();
 });
 
-// Skill tags hover effect
+// Interactive hover effects for skill tags
 document.querySelectorAll('.skill-tag').forEach(tag => {
     tag.addEventListener('mouseenter', function() {
         this.style.transform = 'scale(1.05)';
@@ -320,7 +320,7 @@ document.querySelectorAll('.skill-tag').forEach(tag => {
     });
 });
 
-// Certificate cards hover effect
+// Hover animations for certificate cards
 document.querySelectorAll('.certificate-card').forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-10px) scale(1.02)';
@@ -331,7 +331,7 @@ document.querySelectorAll('.certificate-card').forEach(card => {
     });
 });
 
-// Loading screen
+// Page loading animation
 window.addEventListener('load', () => {
     const loader = document.createElement('div');
     loader.style.cssText = `
@@ -355,7 +355,7 @@ window.addEventListener('load', () => {
         </div>
     `;
     
-    // Add spin animation
+    // Add spinning animation to loading elements
     const style = document.createElement('style');
     style.textContent = `
         @keyframes spin {
@@ -375,16 +375,16 @@ window.addEventListener('load', () => {
     }, 1500);
 });
 
-// Keyboard navigation
+// Keyboard shortcuts I added for better accessibility
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        // Close mobile menu if open
+        // Hide mobile menu if it's open
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
     }
 });
 
-// Theme toggle (optional feature)
+// Dark/light theme switcher (disabled for now)
 function createThemeToggle() {
     const toggle = document.createElement('button');
     toggle.innerHTML = '<i class="fas fa-moon"></i>';
@@ -422,32 +422,32 @@ function createThemeToggle() {
     document.body.appendChild(toggle);
 }
 
-// Initialize theme toggle
-// createThemeToggle(); // Uncomment to enable theme toggle
+// Enable theme toggle if you want it
+// createThemeToggle(); // Just uncomment this line
 
-// CV Download functionality
+// Download my CV when button is clicked
 function downloadCV() {
-    // Method 1: Direct download from assets folder (works when hosted)
+    // Direct download from my assets folder
     const cvUrl = './assets/Houssam_Ghmari_CV.pdf';
     
-    // Create a temporary link element
+    // Create invisible download link
     const link = document.createElement('a');
     link.href = cvUrl;
     link.download = 'Houssam_Ghmari_CV.pdf';
     link.target = '_blank';
     
-    // Append to body, click, and remove
+    // Trigger download and clean up
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     
-    // Show success notification
+    // Let user know download started
     showNotification('CV download started! Thank you for your interest.', 'success');
 }
 
-// Enhanced notification system to support info type
+// Custom notification system I built
 function showNotification(message, type) {
-    // Create notification element
+    // Build the notification popup
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     
@@ -472,7 +472,7 @@ function showNotification(message, type) {
         </div>
     `;
     
-    // Add styles
+    // Style the notification container
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -488,7 +488,7 @@ function showNotification(message, type) {
         max-width: 400px;
     `;
     
-    // Style notification content
+    // Style the message text
     const content = notification.querySelector('.notification-content');
     content.style.cssText = `
         display: flex;
@@ -496,7 +496,7 @@ function showNotification(message, type) {
         gap: 0.75rem;
     `;
     
-    // Style close button
+    // Style the X close button
     const closeBtn = notification.querySelector('.notification-close');
     closeBtn.style.cssText = `
         background: none;
@@ -507,39 +507,39 @@ function showNotification(message, type) {
         margin-left: auto;
     `;
     
-    // Add to page
+    // Show the notification
     document.body.appendChild(notification);
     
-    // Animate in
+    // Slide in animation
     setTimeout(() => {
         notification.style.transform = 'translateX(0)';
     }, 100);
     
-    // Auto remove after 5 seconds
+    // Auto-hide after 5 seconds
     setTimeout(() => {
         removeNotification(notification);
     }, 5000);
     
-    // Close button functionality
+    // Make close button work
     closeBtn.addEventListener('click', () => {
         removeNotification(notification);
     });
 }
 
-// Email Modal Functions
+// Email modal popup controls
 function openEmailModal() {
     const modal = document.getElementById('emailModal');
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden'; // Stop background scrolling
 }
 
 function closeEmailModal() {
     const modal = document.getElementById('emailModal');
     modal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Restore scrolling
+    document.body.style.overflow = 'auto'; // Allow scrolling again
 }
 
-// Close modal when clicking outside of it
+// Close modal when clicking outside the popup
 window.addEventListener('click', function(event) {
     const modal = document.getElementById('emailModal');
     if (event.target === modal) {
@@ -547,24 +547,24 @@ window.addEventListener('click', function(event) {
     }
 });
 
-// Close modal with Escape key
+// Close modal with Escape key for accessibility
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         closeEmailModal();
     }
 });
 
-// Scroll to Top Functionality
+// Back to top button functionality I implemented
 const scrollToTopBtn = document.getElementById('scrollToTop');
 
-// Show/hide scroll to top button based on scroll position
+// Show/hide scroll button and update navbar on scroll
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     
-    // Update navbar background
+    // Change navbar style when scrolling
     if (scrollTop > 100) {
         navbar.style.background = 'rgba(15, 15, 35, 0.98)';
         navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
@@ -573,7 +573,7 @@ window.addEventListener('scroll', () => {
         navbar.style.boxShadow = 'none';
     }
     
-    // Show/hide scroll to top button when user scrolls past half the page
+    // Show scroll button after user scrolls halfway down
     const halfPageHeight = (scrollHeight - clientHeight) / 2;
     if (scrollTop > halfPageHeight) {
         scrollToTopBtn.classList.add('show');
