@@ -37,17 +37,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(15, 15, 35, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-    } else {
-        navbar.style.background = 'rgba(15, 15, 35, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-});
+// Enhanced scroll functionality for navbar and scroll-to-top button
+// (This is handled in the scroll-to-top section below)
 
 // Typing animation for hero title
 function typeWriter(element, text, speed = 50) {
@@ -95,6 +86,68 @@ window.addEventListener('scroll', () => {
     document.querySelectorAll('.floating-card').forEach((card, index) => {
         const speed = 0.5 + (index * 0.1);
         card.style.transform = `translateY(${scrolled * speed * 0.1}px) rotate(${scrolled * 0.02}deg)`;
+    });
+});
+
+// Enhanced CV hint interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers for CV hints
+    document.querySelectorAll('.cv-hint').forEach(hint => {
+        hint.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Add a pulse animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+            
+            // Smooth scroll to CV section
+            const cvSection = document.querySelector('#cv');
+            if (cvSection) {
+                cvSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Add highlight effect to CV section
+                setTimeout(() => {
+                    cvSection.classList.add('highlight-section');
+                    setTimeout(() => {
+                        cvSection.classList.remove('highlight-section');
+                    }, 2000);
+                }, 800);
+            }
+        });
+        
+        // Add hover sound effect (visual feedback)
+        hint.addEventListener('mouseenter', function() {
+            this.style.filter = 'brightness(1.05)';
+        });
+        
+        hint.addEventListener('mouseleave', function() {
+            this.style.filter = '';
+        });
+    });
+    
+    // Staggered animation for skill categories
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, index * 200);
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.skill-category').forEach(category => {
+        skillObserver.observe(category);
     });
 });
 
@@ -472,3 +525,90 @@ function showNotification(message, type) {
         removeNotification(notification);
     });
 }
+
+// Email Modal Functions
+function openEmailModal() {
+    const modal = document.getElementById('emailModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeEmailModal() {
+    const modal = document.getElementById('emailModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+// Close modal when clicking outside of it
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('emailModal');
+    if (event.target === modal) {
+        closeEmailModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeEmailModal();
+    }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+// Show/hide scroll to top button based on scroll position
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    
+    // Update navbar background
+    if (scrollTop > 100) {
+        navbar.style.background = 'rgba(15, 15, 35, 0.98)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+    } else {
+        navbar.style.background = 'rgba(15, 15, 35, 0.95)';
+        navbar.style.boxShadow = 'none';
+    }
+    
+    // Show/hide scroll to top button when user scrolls past half the page
+    const halfPageHeight = (scrollHeight - clientHeight) / 2;
+    if (scrollTop > halfPageHeight) {
+        scrollToTopBtn.classList.add('show');
+    } else {
+        scrollToTopBtn.classList.remove('show');
+    }
+});
+
+// Scroll to top function with smooth animation
+function scrollToTopFunction() {
+    // Smooth scroll to top
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Alternative method for browsers that don't support smooth scroll
+    if (!window.CSS || !CSS.supports('scroll-behavior', 'smooth')) {
+        const scrollDuration = 500;
+        const scrollStep = -window.scrollY / (scrollDuration / 15);
+        
+        const scrollInterval = setInterval(() => {
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep);
+            } else {
+                clearInterval(scrollInterval);
+            }
+        }, 15);
+    }
+}
+
+// Add keyboard accessibility for scroll to top button
+scrollToTopBtn.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        scrollToTopFunction();
+    }
+});
